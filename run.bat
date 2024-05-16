@@ -1,2 +1,2 @@
 @echo off
-mvn clean compile && mvn exec:java -Dexec.mainClass="elixir.restful.App"
+mvn clean compile exec:java -Dexec.mainClass="elixir.restful.App"
