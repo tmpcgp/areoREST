@@ -17,7 +17,6 @@ import java.util.*;
 @Repository // responsible for data.
 public interface ChoiceRepository extends JpaRepository<Choice, Long>{
   List<Choice> findByStateId(Long id);
-  Optional<Choice> findByName(String name);
-  Optional<Choice> findStateByName(String name);
+  Optional<Choice> findChoiceByName(String name);
   @Transactional void deleteByStateId(Long id);
 }

@@ -15,5 +15,4 @@ import java.util.*;
 @Repository // responsible for data.
 public interface AccountRepository extends JpaRepository<Account, Long>{
   Optional<Account> findAccountByName(String name);
-  Optional<Account> findAccountByKey(String key);
 }

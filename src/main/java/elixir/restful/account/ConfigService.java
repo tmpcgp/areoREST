@@ -13,14 +13,25 @@ public class ConfigService {
   private final AccountRepository accountRepository;
   private final StateService stateService;
   private final IntentService intentService;
+
   private final ConfigRepository configRepository;
+  private final StateRepository stateRepository;
+  private final IntentRepository intentRepository;
 
   @Autowired
-  public ConfigService(AccountRepository a, ConfigRepository c, StateService stateService, IntentService intentService) {
+  public ConfigService(AccountRepository a,
+    ConfigRepository c,
+    StateService stateService,
+    IntentService intentService,
+    StateRepository stateRepository,
+    IntentRepository intentRepository
+  ) {
     this.accountRepository = a;
     this.configRepository  = c;
     this.intentService     = intentService;
     this.stateService      = stateService;
+    this.stateRepository   = stateRepository;
+    this.intentRepository  = intentRepository;
   }
 
   // @Incomplete to test...
@@ -53,21 +64,34 @@ public class ConfigService {
     return opt.get();
   }
 
+  @Transactional
   public Config updateConfig(Config config, Long config_id) {
     Config rconfig = configRepository.getReferenceById(config_id);
     if (config.getName() != null) {
       rconfig.setName(config.getName());
     }
     if (config.getStates() != null) {
+      rconfig.setStates(config.getStates());
+      /*
       for (State s : config.getStates()) {
-        stateService.updateState(s, s.getId());
+        if (s.getId() != null) stateService.updateState(s, s.getId());
+        else                   stateService.addNewState(config_id,s);
       }
+      */
     }
     if (config.getIntents() != null) {
+      rconfig.setIntents(config.getIntents());
+      /*
       for (Intent i : config.getIntents()) {
-        intentService.updateIntent(i, i.getId());
+        if (i.getId() != null) intentService.updateIntent(i, i.getId());
+        else                   intentService.addNewIntent(config_id,i);
       }
+      */
     }
+
+    System.out.println("||||||||||||||||||||||||||||||||||||||||");
+    System.out.println("@rconfig "+rconfig);
+    System.out.println("||||||||||||||||||||||||||||||||||||||||");
 
     return configRepository.save(rconfig);
   }

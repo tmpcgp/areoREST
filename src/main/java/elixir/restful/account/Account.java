@@ -5,9 +5,16 @@ import elixir.restful.account.*;
 import java.util.*;
 import lombok.*;
 
-@Entity
-@Table
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor// <--- THIS is it
+@Entity(name="Account")
+@Table(
+  name = "account"
+  /*
+  uniqueConstraints = {
+    @UniqueConstraint(name = "student_email_unique", columnNames = "email")
+  }
+  */
+)
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString// <--- THIS is it
 public class Account {
 
   @Id
@@ -20,14 +27,48 @@ public class Account {
     strategy = GenerationType.SEQUENCE,
     generator = "account_sequence"
   )
+  /*
   @Column(
-    name = "id",
-    updatable = false
+    updatable = false,
+    name = "id"
   )
+  */
   private Long id;
 
+  /*
+  @Column(
+    name = "name",
+    nullable = false,
+    columnDefinition = "TEXT"
+  )
+  */
   private String name;
+  /*
+  @Column(
+    name = "spec",
+    nullable = false,
+    columnDefinition = "TEXT"
+  )
+  */
   private String spec;
+  /*
+  @Column(
+    name = "key",
+    nullable = false,
+    columnDefinition = "TEXT"
+  )
+  */
   private String key;
-  @OneToMany private List<Config> configs;
+
+  @OneToMany
+  /*
+  @OneToMany(
+    mappedBy = "account",
+    cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+    orphanRemoval = true,
+    fetch = FetchType.LAZY
+  )
+  */
+  private List<Config> configs;
+
 }

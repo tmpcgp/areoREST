@@ -30,7 +30,7 @@ public class IntentService {
     Optional<Intent> opt2 = intentRepository.findByName(intent.getName());
 
     if (!opt.isPresent()) {
-      throw new IllegalStateException("State with id "+config_id+" doesn't exist.");
+      throw new IllegalStateException("Config with id "+config_id+" doesn't exist.");
     }
     if (opt2.isPresent()) {
       throw new IllegalStateException("Intent with name "+intent.getName()+" already exist.");

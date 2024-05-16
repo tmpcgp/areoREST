@@ -6,17 +6,19 @@ import lombok.*;
 
 @Entity
 @Table
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor// <--- THIS is it
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString// <--- THIS is it
 public class Choice {
 
   @Id
   @GeneratedValue(
     strategy = GenerationType.AUTO
   )
-  @Column(updatable = false)
+  @Column(
+    updatable = false
+  )
   private Long id;
 
   private String name;
-  @OneToOne private State state;
-  @OneToOne private State redirectValue;
+  @OneToOne(cascade=CascadeType.ALL) private State state;
+  @OneToOne(cascade=CascadeType.ALL) private State redirectValue;
 }

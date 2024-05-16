@@ -18,10 +18,10 @@ public class AccountService {
     this.accountRepository = accountRepository;
   }
 
-  public Account getAccountByKey(String key) {
-    Optional<Account> opt = accountRepository.findAccountByKey(key);
-    if (!opt.isPresent()) {
-      throw new IllegalStateException("Account with key " + key + " doesn't exist.");
+  public Account getAccountByName(String name) {
+    Optional<Account> opt = accountRepository.findAccountByName(name);
+    if (opt.isEmpty()) {
+      throw new IllegalStateException("Account with name "+name+" doesn't exist.");
     }
 
     return opt.get();
@@ -29,7 +29,7 @@ public class AccountService {
 
   public Account getAccountById(Long id) {
     Optional<Account> opt = accountRepository.findById(id);
-    if (!opt.isPresent()) {
+    if (opt.isEmpty()) {
       throw new IllegalStateException("Account with id " + id + " doesn't exist.");
     }
     return opt.get();
@@ -48,7 +48,7 @@ public class AccountService {
   public Account addNewAccount(Account account) {
     Optional<Account> opt = accountRepository.findAccountByName(account.getName());
     if (opt.isPresent()) {
-      throw new IllegalStateException("account name taken.");
+      throw new IllegalStateException("Account with name " + account.getName() + " taken.");
     }
     
     return accountRepository.save(account);
@@ -65,7 +65,7 @@ public class AccountService {
       refAccount.setSpec   (account.getSpec());
     }
     if (account.getKey() != null) {
-      refAccount.setKey    (account.getKey ());
+      refAccount.setKey   (account.getKey());
     } 
 
     return accountRepository.save(refAccount);

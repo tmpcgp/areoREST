@@ -17,7 +17,6 @@ import java.util.*;
 @Repository // responsible for data.
 public interface StateRepository extends JpaRepository<State, Long>{
   List<State> findByConfigId(Long id);
-  Optional<State> findByName(String name);
   Optional<State> findStateByName(String name);
   @Transactional void deleteByConfigId(Long id);
 }
