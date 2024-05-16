@@ -14,6 +14,7 @@ import elixir.restful.account.*;
 
 import java.util.*;
 
+// NOTE : using NO_CONTENT seems to close http connection on recv. 
 @RestController
 @CrossOrigin
 @RequestMapping(path="api/v1/account")
@@ -53,18 +54,18 @@ public class AccountController{
 
   // @Incomplete(need to return http status object)
   @PostMapping("/auth")
-  public ResponseEntity<Boolean> getAuthStatus(@RequestBody Account account, @RequestParam("api_key") String api_key) {
+  public ResponseEntity<AuthStatus> getAuthStatus(@RequestBody Account account, @RequestParam("api_key") String api_key) {
     if (is_token(api_key)) {
       Account faccount = accountService.getAccountByName(account.getName());
 
       if(account.getKey().equals(faccount.getKey())) {
-        return new ResponseEntity<>(new Boolean(true), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new AuthStatus(new Boolean(true)), HttpStatus.ACCEPTED);
       }
       else {
-        return new ResponseEntity<>(new Boolean(false), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new AuthStatus(new Boolean(false)), HttpStatus.UNAUTHORIZED);
       }
     } else {
-      return new ResponseEntity<>(new Boolean(false), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(new AuthStatus(new Boolean(false)), HttpStatus.UNAUTHORIZED);
     }
   }
 
@@ -82,7 +83,9 @@ public class AccountController{
   @PutMapping("/{account_id}")
   public ResponseEntity<Account> updateAccount(@RequestBody Account naccount, @PathVariable("account_id") Long account_id, @RequestParam("api_key") String key) {
     if (is_token(key)) {
-      return new ResponseEntity<>(accountService.updateAccount(naccount, account_id), HttpStatus.NO_CONTENT);
+      ResponseEntity<Account> ret = new ResponseEntity<>(accountService.updateAccount(naccount, account_id), HttpStatus.OK);
+      System.out.println("@ret "+ret);
+      return ret;
     } else {
       return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
@@ -93,7 +96,7 @@ public class AccountController{
   public ResponseEntity<String> deleteAccount(@PathVariable("account_id") Long account_id, @RequestParam("api_key") String key) {
     if (is_token(key)) {
       accountService.deleteAccountById(account_id);
-      return new ResponseEntity<>("Deleted", HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>("Deleted", HttpStatus.OK);
     } else {
       return new ResponseEntity<>("API_KEY is wrong.", HttpStatus.UNAUTHORIZED);
     }
@@ -102,8 +105,14 @@ public class AccountController{
   // create config
   @PostMapping("/{account_id}/config")
   public ResponseEntity<Config> registerConfig(@RequestBody Config config, @PathVariable("account_id") Long account_id, @RequestParam("api_key") String key) {
+    System.out.println("|||||||||||||||||||||||||||||||||||||");
+    System.out.println("@registerConfig "+config);
+    System.out.println("@account_id "+account_id);
+    System.out.println("|||||||||||||||||||||||||||||||||||||");
     if (is_token(key)) {
-      return new ResponseEntity<>(configService.addNewConfig(account_id, config), HttpStatus.CREATED);
+      ResponseEntity<Config> ret = new ResponseEntity<>(configService.addNewConfig(account_id, config), HttpStatus.CREATED);
+      System.out.println("@ret "+ret);
+      return ret;
     } else {
       return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
@@ -112,8 +121,14 @@ public class AccountController{
   // get all config, specific to some account
   @GetMapping("/{account_id}/config")
   public ResponseEntity<List<Config>> getAllConfigs(@PathVariable("account_id") Long account_id, @RequestParam("api_key") String key) {
+    System.out.println("|||||||||||||||||||||||||||||||||||||");
+    System.out.println("@getAllConfigs "+account_id);
+    System.out.println("|||||||||||||||||||||||||||||||||||||");
+
     if (is_token(key)) {
-      return new ResponseEntity<>(configService.getConfigs(account_id), HttpStatus.FOUND);
+      ResponseEntity<List<Config>> ret = new ResponseEntity<>(configService.getConfigs(account_id), HttpStatus.FOUND);
+      System.out.println("@ret "+ret);
+      return ret;
     } else {
       return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
@@ -133,7 +148,7 @@ public class AccountController{
   @PutMapping("/config/{config_id}")
   public ResponseEntity<Config> updateConfig(@RequestBody Config config, @PathVariable("config_id") Long config_id, @RequestParam("api_key") String key) {
     if (is_token(key)) {
-      return new ResponseEntity<>(configService.updateConfig(config, config_id), HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>(configService.updateConfig(config, config_id), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
@@ -141,12 +156,16 @@ public class AccountController{
 
   // delete specific config
   @DeleteMapping("/config/{config_id}")
-  public ResponseEntity<String> deleteConfig(@PathVariable("config_id") Long config_id, @RequestParam("api_key") String key) {
+  public ResponseEntity<DeleteStatus> deleteConfig(@PathVariable("config_id") Long config_id, @RequestParam("api_key") String key) {
+    System.out.println("|||||||||||||||||||||||||||||||");
+    System.out.println("deleteConfig "+config_id);
+    System.out.println("|||||||||||||||||||||||||||||||");
+
     if (is_token(key)) {
       configService.deleteConfig(config_id);
-      return new ResponseEntity<>("Deleted", HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>(new DeleteStatus(new Boolean(true)), HttpStatus.OK);
     } else {
-      return new ResponseEntity<>("API_KEY is wrong.", HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(new DeleteStatus(new Boolean(false)), HttpStatus.UNAUTHORIZED);
     }
   }
 }

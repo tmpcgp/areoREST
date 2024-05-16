@@ -51,7 +51,8 @@ public class AccountService {
       throw new IllegalStateException("Account with name " + account.getName() + " taken.");
     }
     
-    return accountRepository.save(account);
+    Account naccount = accountRepository.save(account);
+    return  naccount;
   }
 
   public Account updateAccount(Account account, Long id) {
@@ -68,7 +69,10 @@ public class AccountService {
       refAccount.setKey   (account.getKey());
     } 
 
-    return accountRepository.save(refAccount);
+    Account naccount = accountRepository.save(refAccount);
+    System.out.println("@naccount "+naccount);
+
+    return naccount;
   }
 
 }
