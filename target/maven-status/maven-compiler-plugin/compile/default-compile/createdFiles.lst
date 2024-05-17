@@ -5,6 +5,7 @@ elixir\restful\account\State.class
 elixir\restful\account\AccountService.class
 elixir\restful\account\IntentService.class
 elixir\restful\account\StateService.class
+elixir\restful\shell\Commands.class
 elixir\restful\account\Config.class
 elixir\restful\account\ChoiceService.class
 elixir\restful\account\ConfigService.class

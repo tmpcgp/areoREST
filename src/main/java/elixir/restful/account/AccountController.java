@@ -158,7 +158,7 @@ public class AccountController{
   @DeleteMapping("/config/{config_id}")
   public ResponseEntity<DeleteStatus> deleteConfig(@PathVariable("config_id") Long config_id, @RequestParam("api_key") String key) {
     System.out.println("|||||||||||||||||||||||||||||||");
-    System.out.println("deleteConfig "+config_id);
+    System.out.println("@deleteConfig "+config_id);
     System.out.println("|||||||||||||||||||||||||||||||");
 
     if (is_token(key)) {
