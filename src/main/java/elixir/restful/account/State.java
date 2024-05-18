@@ -4,6 +4,7 @@ import elixir.restful.account.*;
 import jakarta.persistence.*;
 import java.util.*;
 import lombok.*;
+import org.springframework.transaction.annotation.*;
 
 @Entity(name="State")
 @Table(name="state")

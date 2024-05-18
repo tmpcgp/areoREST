@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
 
+import org.springframework.transaction.annotation.*;
+
 @Entity(name="Entity")
 @Table(name="entity")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString// <--- THIS is it

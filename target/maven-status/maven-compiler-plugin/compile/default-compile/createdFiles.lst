@@ -16,6 +16,5 @@ elixir\restful\account\IntentRepository.class
 elixir\restful\account\StateRepository.class
 elixir\restful\App.class
 elixir\restful\account\AccountRepository.class
-elixir\restful\account\AccountConfig.class
 elixir\restful\account\ChoiceRepository.class
 elixir\restful\account\AccountController.class

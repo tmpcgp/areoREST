@@ -5,14 +5,11 @@ import elixir.restful.account.*;
 import java.util.*;
 import lombok.*;
 
+import org.springframework.transaction.annotation.*;
+
 @Entity(name="Account")
 @Table(
   name = "account"
-  /*
-  uniqueConstraints = {
-    @UniqueConstraint(name = "student_email_unique", columnNames = "email")
-  }
-  */
 )
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString// <--- THIS is it
 public class Account {

@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
-
-import elixir.restful.account.AccountService;
 import elixir.restful.account.*;
 
 import java.util.*;

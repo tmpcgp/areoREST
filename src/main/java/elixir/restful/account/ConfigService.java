@@ -50,11 +50,13 @@ public class ConfigService {
     return configRepository.save(config);
   }
 
+  @Transactional
   public List<Config> getConfigs(Long account_id) {
     List<Config> configs = configRepository.findByAccountId(account_id);
     return configs;
   }
 
+  @Transactional
   public Config getConfig(Long config_id) {
     Optional<Config> opt = configRepository.findById(config_id);
     if (!opt.isPresent()) {
