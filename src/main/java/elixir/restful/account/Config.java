@@ -32,6 +32,9 @@ public class Config {
   */
   private String name;
 
+
+  private String note;
+
   @ManyToOne 
   /*
   @JoinColumn(

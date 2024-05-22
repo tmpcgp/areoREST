@@ -74,21 +74,12 @@ public class ConfigService {
     }
     if (config.getStates() != null) {
       rconfig.setStates(config.getStates());
-      /*
-      for (State s : config.getStates()) {
-        if (s.getId() != null) stateService.updateState(s, s.getId());
-        else                   stateService.addNewState(config_id,s);
-      }
-      */
     }
     if (config.getIntents() != null) {
       rconfig.setIntents(config.getIntents());
-      /*
-      for (Intent i : config.getIntents()) {
-        if (i.getId() != null) intentService.updateIntent(i, i.getId());
-        else                   intentService.addNewIntent(config_id,i);
-      }
-      */
+    }
+    if (config.getNote() != null) {
+      rconfig.setNote(config.getNote());
     }
 
     System.out.println("||||||||||||||||||||||||||||||||||||||||");
